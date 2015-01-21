@@ -12,3 +12,12 @@ working directory.  The CSV is output to standard output.  The first two CSV
 columns output are the Key name and the number of times the key appears in the
 XML file.  The remainder of the columns are the unique values appearing in the
 tag.
+
+## Usage
+
+    osm-tags
+
+## Installation
+
+    go get github.com/homme/bits-n-bobs/osm-tags
+    go install github.com/homme/bits-n-bobs/osm-tags

@@ -15,6 +15,10 @@ non-existent: use at your own risk!
   Output the result of multiplying the string in the first column of a CSV file
   by the the value in the second column.
 
+* [imap-dump](https://github.com/homme/bits-n-bobs/tree/master/imap-dump) - Save
+  everything in an IMAP account to the local machine. Can also be used for
+  extracting attachments.
+
 ## License
 
 Unless noted elsewhere, all code in this repository is made available under the

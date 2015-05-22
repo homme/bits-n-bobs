@@ -17,6 +17,12 @@ def iter_mailboxes(imapper):
     for box in (cre.split(mb)[-1] for mb in boxes):
         yield box
 
+def iter_alluids(imapper):
+    for box in iter_mailboxes(imapper):
+        imapper.change_mailbox(box)
+        for uid in imapper.listids(limit=-1):
+            yield box, uid
+
 def iter_mail(imapper):
     for uid in imapper.listids(limit=-1):
         mail = imapper.mail(uid, include_raw=True)
@@ -49,15 +55,28 @@ def main():
     #    for attachment in mail.attachments:
     #        save_attachment(attachment)
 
-    for box in iter_mailboxes(imapper):
-        print "Changing to '%s'" % box
-        imapper.change_mailbox(box)
-        os.makedirs(box)
-        for mail in iter_mail(imapper):
-            filename = '%s%s%d.eml' % (box, os.path.sep, mail.uid)
+    current_box = None
+    for box, uid in iter_alluids(imapper):
+        filename = '%s%s%s.eml' % (box, os.path.sep, uid)
+        if not os.path.exists(filename):
+            if current_box != box:
+                print "Changing to '%s'" % box
+                imapper.change_mailbox(box)
+                current_box = box
+                if not os.path.exists(box):
+                    os.makedirs(box)
+
             print "Saving %s" % filename
+            try:
+                mail = imapper.mail(uid, include_raw=True)
+            except TypeError:
+                print "Cannot access %s" % filename
+                continue
+
             with open(filename, 'w') as f:
                 f.write(mail.raw)
+        else:
+            print "Skipping %s" % filename
 
     imapper.quit()
     

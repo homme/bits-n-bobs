@@ -19,6 +19,9 @@ non-existent: use at your own risk!
   everything in an IMAP account to the local machine. Can also be used for
   extracting attachments.
 
+* [trello-summary](https://github.com/homme/bits-n-bobs/tree/master/trello-summary) -
+  Summarise your activities on Trello by date.
+
 ## License
 
 Unless noted elsewhere, all code in this repository is made available under the
